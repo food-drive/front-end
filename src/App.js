@@ -1,28 +1,61 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Provider } from 'react-redux'
+import { BrowserRouter as Router } from 'react-router-dom'
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+import { JssProvider } from 'react-jss';
+
+import CssBaseline from '@material-ui/core/CssBaseline';
+import {
+  createMuiTheme,
+  createGenerateClassName,
+  MuiThemeProvider,
+} from '@material-ui/core/styles';
+
+import Routes from './components/routes/routes'
+import Layout from './components/layout/layout'
+
+import store from './utils/store'
+
+const options = {
+  theme: {
+    typography: {
+      useNextVariants: true,
+      suppressDeprecationWarnings: true
+    },
+    palette: {
+      primary: {
+        main: '#f08a00'
+      },
+      secondary: {
+        main: '#465f0f',
+      },
+    }
+  },
+  dangerouslyUseGlobalCSS: false,
+  productionPrefix: 'jss',
+};
+
+const App = () => {
+  const { dangerouslyUseGlobalCSS, productionPrefix, theme } = options;
+
+  const generateClassName = createGenerateClassName({
+    dangerouslyUseGlobalCSS,
+    productionPrefix,
+  });
+  return (
+    <Provider store={store}>
+      <JssProvider generateClassName={generateClassName}>
+        <MuiThemeProvider theme={createMuiTheme(theme)}>
+          <CssBaseline />
+          <Layout>
+            <Router>
+              <Routes/>
+            </Router>
+          </Layout>
+        </MuiThemeProvider>
+      </JssProvider>
+    </Provider>
+  )
 }
 
 export default App;
