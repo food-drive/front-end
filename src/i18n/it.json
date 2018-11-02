@@ -1,0 +1,25 @@
+{
+  "pages": {
+    "login": {
+      "title": "Login"
+    },
+    "home": {
+      "title": "Gestione Colletta Alimentare"
+    },
+    "reports": {
+      "title": "Reports"
+    },
+    "collectionPointList": {
+      "title": "Gestione Carichi"
+    },
+    "collectionPoint": {
+      "title": "Gestione supermercato"
+    },
+    "productLoadsList": {
+      "title": "Gestione prodotti"
+    },
+    "teamLeader": {
+      "title": "Capi Equipe"
+    }
+  }
+}

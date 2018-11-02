@@ -2,7 +2,7 @@ import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 
 import Header from './header'
-import Navigation from './navigation'
+import Navigation from '../navigation/navigation'
 import Content from './content'
 
 import 'typeface-roboto'
@@ -32,7 +32,7 @@ class Layout extends React.Component {
     return (
       <div className={classes.root}>
         <Header open={this.state.open} toggleDrawer={this.toggleDrawer.bind(this)}/>
-        <Navigation open={this.state.open}/>
+        <Navigation open={this.state.open} toggleDrawer={this.toggleDrawer.bind(this)}/>
         <Content>
           {children}
         </Content>
