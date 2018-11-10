@@ -2,7 +2,6 @@ import routes, {routesIds}  from '../routes/routes-list'
 
 const includeInNavigation = [
   routesIds.home,
-  routesIds.login,
   routesIds.collectionPointList,
   routesIds.teamLeader,
   routesIds.reports

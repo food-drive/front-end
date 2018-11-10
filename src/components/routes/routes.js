@@ -1,10 +1,11 @@
 import React from 'react'
-import {Route} from 'react-router-dom'
-import {withRoutes} from '../../utils/hocs'
+import { connect } from 'react-redux'
+import {Route, withRouter} from 'react-router-dom'
 
-const Routes = ({routes}) => routes.map(({path, component}) => (
+import routes from './routes-list'
+
+const Routes = (props) => routes.map(({path, component}) => (
   <Route exact path={path} component={component} key={path}/>
 ))
 
-
-export default withRoutes(Routes)
+export default withRouter(connect(({routes}) => ({routes}))(Routes))

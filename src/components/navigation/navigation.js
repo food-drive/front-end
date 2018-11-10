@@ -1,4 +1,7 @@
 import React from 'react'
+
+import { Link, withRouter } from 'react-router-dom'
+
 import { withStyles } from '@material-ui/core/styles'
 import classNames from 'classnames'
 import Drawer from '@material-ui/core/Drawer'
@@ -42,33 +45,38 @@ const styles = theme => ({
   }
 })
 
-const Navigation = ({classes, navigation, language, open, toggleDrawer}) => (
-  <Drawer
-    variant="permanent"
-    anchor="left"
-    open={open}
-    classes={{
-      paper: classNames(classes.drawer, !open && classes.drawerClose)
-    }}
-  >
-    <div className={classes.toolbarIcon}>
-      <IconButton onClick={toggleDrawer}>
-        <ChevronLeftIcon />
-      </IconButton>
-    </div>
-    <MenuList>
-    {
-      navigation.map(({id, Icon}) =>
-        <MenuItem key={id}>
-          <ListItemIcon >
-            <Icon />
-          </ListItemIcon>
-          <ListItemText inset primary={language.pages[id].title} />
-        </MenuItem>
-      )
-    }
-    </MenuList>
-  </Drawer>
-)
+const Navigation = ({classes, navigation, language, open, toggleDrawer, ...props}) => {
+  console.log(props)
+  return (
+    <Drawer
+      variant="permanent"
+      anchor="left"
+      open={open}
+      classes={{
+        paper: classNames(classes.drawer, !open && classes.drawerClose)
+      }}
+    >
+      <div className={classes.toolbarIcon}>
+        <IconButton onClick={toggleDrawer}>
+          <ChevronLeftIcon />
+        </IconButton>
+      </div>
+      <MenuList>
+      {
+        navigation.map(({id, path, Icon}) =>
+          <Link to={path} key={id}>
+            <MenuItem>
+              <ListItemIcon >
+                <Icon />
+              </ListItemIcon>
+              <ListItemText inset primary={language.pages[id].title} />
+            </MenuItem>
+          </Link>
+        )
+      }
+      </MenuList>
+    </Drawer>
+  )
+}
 
-export default withLanguage(withNavigation(withStyles(styles)(Navigation)))
+export default withRouter(withLanguage(withNavigation(withStyles(styles)(Navigation))))

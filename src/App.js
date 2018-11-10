@@ -47,11 +47,11 @@ const App = () => {
       <JssProvider generateClassName={generateClassName}>
         <MuiThemeProvider theme={createMuiTheme(theme)}>
           <CssBaseline />
-          <Layout>
-            <Router>
+          <Router>
+            <Layout>
               <Routes/>
-            </Router>
-          </Layout>
+            </Layout>
+          </Router>
         </MuiThemeProvider>
       </JssProvider>
     </Provider>
