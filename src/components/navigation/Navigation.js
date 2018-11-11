@@ -45,38 +45,35 @@ const styles = theme => ({
   }
 })
 
-const Navigation = ({classes, navigation, language, open, toggleDrawer, ...props}) => {
-  console.log(props)
-  return (
-    <Drawer
-      variant="permanent"
-      anchor="left"
-      open={open}
-      classes={{
-        paper: classNames(classes.drawer, !open && classes.drawerClose)
-      }}
-    >
-      <div className={classes.toolbarIcon}>
-        <IconButton onClick={toggleDrawer}>
-          <ChevronLeftIcon />
-        </IconButton>
-      </div>
-      <MenuList>
-      {
-        navigation.map(({id, path, Icon}) =>
-          <Link to={path} key={id}>
-            <MenuItem>
-              <ListItemIcon >
-                <Icon />
-              </ListItemIcon>
-              <ListItemText inset primary={language.pages[id].title} />
-            </MenuItem>
-          </Link>
-        )
-      }
-      </MenuList>
-    </Drawer>
-  )
-}
+const Navigation = ({location: { pathName }, setSelectedRoute, classes, navigation, language, open, toggleDrawer}) => (
+  <Drawer
+    variant="permanent"
+    anchor="left"
+    open={open}
+    classes={{
+      paper: classNames(classes.drawer, !open && classes.drawerClose)
+    }}
+  >
+    <div className={classes.toolbarIcon}>
+      <IconButton onClick={toggleDrawer}>
+        <ChevronLeftIcon />
+      </IconButton>
+    </div>
+    <MenuList>
+    {
+      navigation.map(({id, path, Icon, selected}) =>
+        <Link to={path} key={id}>
+          <MenuItem selected={selected}>
+            <ListItemIcon >
+              <Icon />
+            </ListItemIcon>
+            <ListItemText inset primary={language.pages[id].title} />
+          </MenuItem>
+        </Link>
+      )
+    }
+    </MenuList>
+  </Drawer>
+)
 
 export default withRouter(withLanguage(withNavigation(withStyles(styles)(Navigation))))

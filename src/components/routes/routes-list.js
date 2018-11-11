@@ -27,37 +27,44 @@ const routes = [{
   id: 'login',
   path: '/login',
   component: Login,
-  Icon: InputIcon
+  Icon: InputIcon,
+  selected: false
 },{
   id: 'home',
   path: '/home',
   component: Home,
-  Icon: HomeIcon
+  Icon: HomeIcon,
+  selected: true
 },{
   id: 'collectionPointList',
   path: '/collection-point-list',
   component: CollectionPointList,
-  Icon: StoreMallDirectoryIcon
+  Icon: StoreMallDirectoryIcon,
+  selected: false
 },{
   id: 'collectionPoint',
   path: '/collection-point',
   component: CollectionPoint,
-  Icon: InputIcon
+  Icon: InputIcon,
+  selected: false
 },{
   id: 'productLoadsList',
   path: '/product-loads-list',
   component: ProductLoadsList,
-  Icon: ShoppingBasketIcon
+  Icon: ShoppingBasketIcon,
+  selected: false
 },{
   id: 'teamLeader',
   path: '/team-leader',
   component: TeamLeader,
-  Icon: PersonIcon
+  Icon: PersonIcon,
+  selected: false
 },{
   id: 'reports',
   path: '/reports',
   component: Reports,
-  Icon: ShowChartIcon
+  Icon: ShowChartIcon,
+  selected: false
 }]
 
 export default routes

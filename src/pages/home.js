@@ -1,7 +1,11 @@
 import React from 'react'
 
+import NavigationPage from '../components/navigation/NavigationPage'
+
 const Home = () => (
-  <div>HOME</div>
+  <NavigationPage>
+    Home
+  </NavigationPage>
 )
 
 export default Home

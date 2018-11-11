@@ -2,7 +2,7 @@ import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 
 import Header from './header'
-import Navigation from '../navigation/navigation'
+import Navigation from '../navigation/Navigation'
 import Content from './content'
 
 import 'typeface-roboto'

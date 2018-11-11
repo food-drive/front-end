@@ -8,6 +8,8 @@ import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 
+import {withNavigation, withLanguage} from '../../utils/hocs'
+
 const drawerWidth = 300
 
 const styles = theme => ({
@@ -31,7 +33,7 @@ const styles = theme => ({
   }
 })
 
-const Header = ({classes, open, toggleDrawer}) => (
+const Header = ({classes, language, navigation, open, toggleDrawer}) => (
   <AppBar
     position="absolute"
     color="secondary"
@@ -42,11 +44,13 @@ const Header = ({classes, open, toggleDrawer}) => (
         <MenuIcon />
       </IconButton>
       <Typography variant="h6" color="inherit" >
-        News
+        {
+          language.pages[navigation.find(({selected}) => selected).id].title
+        }
       </Typography>
       <Button color="inherit">Login</Button>
     </Toolbar>
   </AppBar>
 )
 
-export default withStyles(styles)(Header)
+export default withStyles(styles)(withLanguage(withNavigation(Header)))

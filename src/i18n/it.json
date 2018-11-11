@@ -1,7 +1,11 @@
 {
   "pages": {
     "login": {
-      "title": "Login"
+      "title": "Login",
+      "loginText": "Login",
+      "username": "Username",
+      "password": "Password",
+      "submitButton": "Login"
     },
     "home": {
       "title": "Gestione Colletta Alimentare"
