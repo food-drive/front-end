@@ -6,10 +6,9 @@ export const LOGIN = 'LOGIN'
 
 export const loginAction = ({username, password}) => {
   login({username, password})
-  .then(store.dispatch({
+  .then(token => store.dispatch({
       type: LOGIN,
-      username,
-      password
+      token
     })
   )
 }

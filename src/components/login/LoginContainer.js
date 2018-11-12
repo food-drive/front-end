@@ -7,10 +7,7 @@ import { loginAction } from './loginActions'
 const mapStateToProps = null
 
 const mapDispatchToProps = () => ({
-  login: params => {
-    console.log('nooooooo')
-    loginAction(params)
-  }
+  login: params => loginAction(params)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login))
