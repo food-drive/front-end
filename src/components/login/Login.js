@@ -1,11 +1,11 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom'
+
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControl from '@material-ui/core/FormControl';
-// import FormControlLabel from '@material-ui/core/FormControlLabel';
-// import Checkbox from '@material-ui/core/Checkbox';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import LockIcon from '@material-ui/icons/LockOutlined';
@@ -75,9 +75,12 @@ class Login extends React.Component {
   }
 
   render () {
-    const {classes, language} = this.props
+    const {classes, language, isLoggedIn, routes} = this.props
+    const homePage = routes.find(({id}) => id === routesIds.home)
     const pageLanguage = language.pages[routesIds.login]
     return (
+      isLoggedIn ?
+        <Redirect to={homePage.path}/> :
       <main className={classes.main}>
         <CssBaseline />
         <Paper className={classes.paper}>
@@ -98,10 +101,6 @@ class Login extends React.Component {
               <InputLabel htmlFor="password">{pageLanguage.password}</InputLabel>
               <Input name="password" type="password" id="password" autoComplete="current-password" onChange={this.updatePassword.bind(this)}/>
             </FormControl>
-            {/* <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            /> */}
             <Button
               type="submit"
               fullWidth

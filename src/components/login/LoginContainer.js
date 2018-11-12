@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom'
 import Login from './Login'
 import { loginAction } from './loginActions'
 
-const mapStateToProps = null
+const mapStateToProps = ({user: {isLoggedIn}, routes}) => ({isLoggedIn, routes})
 
 const mapDispatchToProps = () => ({
   login: params => loginAction(params)

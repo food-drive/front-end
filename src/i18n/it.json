@@ -1,4 +1,10 @@
 {
+  "sections": {
+    "header": {
+      "login": "Login",
+      "logout": "Logout"
+    }
+  },
   "pages": {
     "login": {
       "title": "Login",

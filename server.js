@@ -15,7 +15,9 @@ app
   .post('/api/login', (req, res) => {
     res.send(require(path.join(__dirname, 'api_mocks', 'login.json')));
   })
-app
+  .get('/api/logout', (req, res) => {
+    res.sendStatus(200);
+  })
   .get('/api/user', (req, res) => {
     res.send(path.join(__dirname, 'api_mocks', 'user.json'));
   })
@@ -34,6 +36,4 @@ app
   .post('/api/supermercati', (req, res) => {
     res.send(path.join(__dirname, 'api_mocks', 'supermercati.json'));
   })
-
-app
   .listen(port, () => console.log(`listening on port ${port}`));

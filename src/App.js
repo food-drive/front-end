@@ -12,7 +12,6 @@ import {
 } from '@material-ui/core/styles';
 
 import Routes from './components/routes/routes'
-import Layout from './components/layout/layout'
 
 import store from './utils/store'
 
@@ -48,9 +47,7 @@ const App = () => {
         <MuiThemeProvider theme={createMuiTheme(theme)}>
           <CssBaseline />
           <Router>
-            <Layout>
-              <Routes/>
-            </Layout>
+            <Routes/>
           </Router>
         </MuiThemeProvider>
       </JssProvider>
