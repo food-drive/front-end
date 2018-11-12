@@ -1,0 +1,22 @@
+{
+  "user": {
+      "username": "amministratore",
+      "api_key": "qu3fr7236qv",
+      "privilegi": "1",
+      "ruolo": "amministratore",
+      "nome": "Graziano",
+      "cognome": "Statello",
+      "email": "d",
+      "id_area": "1",
+      "telefono": "0",
+      "colletta": {
+          "__PHP_Incomplete_Class_Name": "TableColletta",
+          "id": "8",
+          "nome": "Colletta Alimentare",
+          "anno": "2018",
+          "data": "24/11/2018",
+          "attiva": "1"
+      }
+  },
+  "error": false
+}

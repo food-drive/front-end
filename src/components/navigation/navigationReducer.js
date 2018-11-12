@@ -2,8 +2,6 @@ import routes, {routesIds}  from '../routes/routes-list'
 
 import { SET_SELECTED_ROUTE } from './NavigationActions'
 
-console.log(routes, routesIds)
-
 const includeInNavigation = [
   routesIds.home,
   routesIds.collectionPointList,
