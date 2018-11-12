@@ -1,10 +1,12 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
-import {Route, withRouter} from 'react-router-dom'
+import {Route, Redirect, withRouter} from 'react-router-dom'
 
 import routes, { routesIds } from './routes-list'
 
-import Layout from '../layout/layout'
+import Layout from '../layout/LayoutContainer'
+
+import Page from '../../pages/page'
 
 import Home from '../../pages/home'
 import Login from '../../pages/login'
@@ -35,7 +37,9 @@ const LayoutRoutes = ({components}) => components.map(({Component, path}, i) =>
     path={path}
     render={() => (
       <Layout>
-        <Component/>
+        <Page>
+          <Component/>
+        </Page>
       </Layout>
     )}
   />
@@ -43,8 +47,11 @@ const LayoutRoutes = ({components}) => components.map(({Component, path}, i) =>
 
 const Routes = () =>
   <Fragment>
+    <Route exact path="/" component={() => (
+      <Redirect to="/home" />
+    )}/>
     <LayoutRoutes components={RoutesComponents} />
-    <Route exact path="/login" component={Login}/>
+    <Route exact path="/login" render={Login}/>
   </Fragment>
 
 export default withRouter(connect(({routes}) => ({routes}))(Routes))

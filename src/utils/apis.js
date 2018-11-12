@@ -7,3 +7,24 @@ export const login = ({username, password}) =>
 
 export const logout = token =>
   axios.get(`${process.env.REACT_APP_API}/logout`, {token})
+
+export const getUser = () =>
+  axios.get(`${process.env.REACT_APP_API}/get/user`, {})
+    .then(({data}) => {
+      return data.user
+    })
+
+export const getEvents = () =>
+  axios.post(`${process.env.REACT_APP_API}/get/colletta`, {})
+    .then(({data}) => {
+      return data.colletta.map(({attiva, ...colletta}) => ({
+        attiva: parseInt(attiva),
+        ...colletta
+      }))
+    })
+
+export const getCollectionPoints = () =>
+  axios.post(`${process.env.REACT_APP_API}/get/supermercati`, {})
+    .then(({data}) => {
+      return data.supermercati
+    })

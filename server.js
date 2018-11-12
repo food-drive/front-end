@@ -18,22 +18,22 @@ app
   .get('/api/logout', (req, res) => {
     res.sendStatus(200);
   })
-  .get('/api/user', (req, res) => {
-    res.send(path.join(__dirname, 'api_mocks', 'user.json'));
+  .get('/api/get/user', (req, res) => {
+    res.send(require(path.join(__dirname, 'api_mocks', 'user.json')));
   })
-  .post('/api/aree', (req, res) => {
-    res.send(path.join(__dirname, 'api_mocks', 'aree.json'));
+  .post('/api/get/aree', (req, res) => {
+    res.send(require(path.join(__dirname, 'api_mocks', 'aree.json')));
   })
-  .post('/api/capi_equipe', (req, res) => {
-    res.send(path.join(__dirname, 'api_mocks', 'capi_equipe.json'));
+  .post('/api/get/capi_equipe', (req, res) => {
+    res.send(require(path.join(__dirname, 'api_mocks', 'capi_equipe.json')));
   })
-  .post('/api/catene', (req, res) => {
-    res.send(path.join(__dirname, 'api_mocks', 'catene.json'));
+  .post('/api/get/catene', (req, res) => {
+    res.send(require(path.join(__dirname, 'api_mocks', 'catene.json')));
   })
-  .post('/api/colletta', (req, res) => {
-    res.send(path.join(__dirname, 'api_mocks', 'colletta.json'));
+  .post('/api/get/colletta', (req, res) => {
+    res.send(require(path.join(__dirname, 'api_mocks', 'colletta.json')));
   })
-  .post('/api/supermercati', (req, res) => {
-    res.send(path.join(__dirname, 'api_mocks', 'supermercati.json'));
+  .post('/api/get/supermercati', (req, res) => {
+    res.send(require(path.join(__dirname, 'api_mocks', 'supermercati.json')));
   })
   .listen(port, () => console.log(`listening on port ${port}`));

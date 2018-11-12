@@ -1,12 +1,14 @@
 import { combineReducers } from 'redux'
 import routes from '../components/routes/routes-reducer'
 import language from './language-reducer'
-import navigation from '../components/navigation/navigationReducer'
 import user from '../components/login/loginReducer'
+import eventList from '../components/layout/eventListReducer'
+import collectionPointList from '../components/collection-point-list/collectionPointListReducer'
 
 export default combineReducers({
   routes,
-  navigation,
   language,
-  user
+  user,
+  eventList,
+  collectionPointList
 })

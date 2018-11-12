@@ -1,12 +1,18 @@
 import React from 'react'
-import {withLanguage} from '../utils/hocs'
+import { connect } from 'react-redux'
 
-import NavigationPage from '../components/navigation/NavigationPage'
+import CollectionPointList from '../components/collection-point-list/CollectionPointsListContainer'
 
-const CollectionPointList = ({language: {pages: {collectionPointList}}}) => (
-  <NavigationPage>
-    <div>{collectionPointList.title}</div>
-  </NavigationPage>
-)
+const CollectionPointListPage = ({user: {colletta}}) => {
+  return (
+    colletta ?
+      <CollectionPointList /> :
+      <div></div>
+  )
+}
 
-export default withLanguage(CollectionPointList)
+const mapStateToProps = ({user}) => ({user})
+
+const mapDispatchToProps = null
+
+export default connect(mapStateToProps, mapDispatchToProps)(CollectionPointListPage)

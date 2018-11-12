@@ -1,11 +1,7 @@
 import React from 'react'
 
-import NavigationPage from '../components/navigation/NavigationPage'
-
 const TeamLeaders = () => (
-  <NavigationPage>
-    <div>TeamLeaders</div>
-  </NavigationPage>
+  <div>TeamLeaders</div>
 )
 
 export default TeamLeaders

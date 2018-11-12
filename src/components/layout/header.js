@@ -34,7 +34,7 @@ const styles = theme => ({
   }
 })
 
-const Header = ({classes, language, navigation, open, toggleDrawer}) => (
+const Header = ({classes, language, navigation, open, toggleDrawer, event}) => (
   <AppBar
     position="absolute"
     color="secondary"
@@ -45,11 +45,18 @@ const Header = ({classes, language, navigation, open, toggleDrawer}) => (
         <MenuIcon />
       </IconButton>
       <Typography variant="h6" color="inherit" >
-        {
-          language.pages[navigation.find(({selected}) => selected).id].title
-        }
+        <span>
+          {
+            event && `${event.nome} ${event.anno}`
+          }
+        </span>
+        {/* <span>
+          {
+            language.pages[navigation.find(({selected}) => selected).id].title
+          }
+        </span> */}
       </Typography>
-      <LogoutButton />
+      <LogoutButton/>
     </Toolbar>
   </AppBar>
 )

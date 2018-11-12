@@ -1,13 +1,12 @@
 import React from 'react'
-import { connect } from 'react-redux'
 
-import { Redirect } from 'react-router-dom'
+import { Redirect, withRouter } from 'react-router-dom'
 
 import { withStyles } from '@material-ui/core/styles'
 
-import Header from './header'
-import Navigation from '../navigation/Navigation'
-import Content from './content'
+import Header from './Header'
+import Navigation from '../navigation/NavigationContainer'
+import Content from './Content'
 
 import 'typeface-roboto'
 import { routesIds } from '../routes/routes-list';
@@ -32,9 +31,22 @@ class Layout extends React.Component {
     this.setState({open: !this.state.open})
   }
 
+  componentDidMount () {
+    const { fetchEventList, fetchUser } = this.props
+    fetchEventList()
+    fetchUser()
+  }
+
   render () {
-    const {classes, children, isLoggedIn, routes} = this.props
+    const {
+      classes,
+      children,
+      isLoggedIn,
+      routes,
+      eventList
+    } = this.props
     const loginPage = routes.find(({id}) => id === routesIds.login)
+    const activeEvent = eventList.find(({attiva}) => attiva)
     return (
       !isLoggedIn ?
         <Redirect to={loginPage.path}/> :
@@ -42,6 +54,7 @@ class Layout extends React.Component {
           <Header
             open={this.state.open}
             toggleDrawer={this.toggleDrawer.bind(this)}
+            event={activeEvent}
           />
           <Navigation open={this.state.open} toggleDrawer={this.toggleDrawer.bind(this)}/>
           <Content>
@@ -52,8 +65,4 @@ class Layout extends React.Component {
   }
 }
 
-const mapStateToProps = ({user: {isLoggedIn}, routes}) => ({isLoggedIn, routes})
-
-const mapDispatchToProps = null
-
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Layout))
+export default withRouter(withStyles(styles)(Layout))

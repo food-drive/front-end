@@ -13,7 +13,7 @@ import IconButton from '@material-ui/core/IconButton'
 
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 
-import {withLanguage, withNavigation} from '../../utils/hocs'
+import {withLanguage} from '../../utils/hocs'
 
 const styles = theme => ({
   drawer: {
@@ -45,7 +45,7 @@ const styles = theme => ({
   }
 })
 
-const Navigation = ({location: { pathName }, setSelectedRoute, classes, navigation, language, open, toggleDrawer}) => (
+const Navigation = ({location: { pathName }, classes, routes, language, open, toggleDrawer}) => (
   <Drawer
     variant="permanent"
     anchor="left"
@@ -61,7 +61,8 @@ const Navigation = ({location: { pathName }, setSelectedRoute, classes, navigati
     </div>
     <MenuList>
     {
-      navigation.map(({id, path, Icon, selected}) =>
+      routes.filter(({showInNavigation}) => showInNavigation)
+      .map(({id, path, Icon, selected}) =>
         <Link to={path} key={id}>
           <MenuItem selected={selected}>
             <ListItemIcon >
@@ -76,4 +77,4 @@ const Navigation = ({location: { pathName }, setSelectedRoute, classes, navigati
   </Drawer>
 )
 
-export default withRouter(withLanguage(withNavigation(withStyles(styles)(Navigation))))
+export default withRouter(withLanguage(withStyles(styles)(Navigation)))

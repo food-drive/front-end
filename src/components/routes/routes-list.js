@@ -19,37 +19,44 @@ const routes = [{
   id: 'login',
   path: '/login',
   Icon: InputIcon,
-  selected: false
+  selected: false,
+  showInNavigation: false
 },{
   id: 'home',
   path: '/home',
   Icon: HomeIcon,
-  selected: true
+  selected: true,
+  showInNavigation: true
 },{
   id: 'collectionPointList',
   path: '/collection-point-list',
   Icon: StoreMallDirectoryIcon,
-  selected: false
+  selected: false,
+  showInNavigation: true
 },{
   id: 'collectionPoint',
   path: '/collection-point',
   Icon: InputIcon,
-  selected: false
+  selected: false,
+  showInNavigation: false
 },{
   id: 'productLoadsList',
   path: '/product-loads-list',
   Icon: ShoppingBasketIcon,
-  selected: false
+  selected: false,
+  showInNavigation: false
 },{
   id: 'teamLeader',
   path: '/team-leader',
   Icon: PersonIcon,
-  selected: false
+  selected: false,
+  showInNavigation: true
 },{
   id: 'reports',
   path: '/reports',
   Icon: ShowChartIcon,
-  selected: false
+  selected: false,
+  showInNavigation: true
 }]
 
 export default routes
