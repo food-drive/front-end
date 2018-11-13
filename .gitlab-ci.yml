@@ -2,6 +2,7 @@ image: node:8.9.1
 
 stages:
   - build
+  - deploy
 
 cache:
   paths:
@@ -10,7 +11,26 @@ cache:
 build:
   stage: build
   script:
-    - npm install
+    - npm ci
     - npm run build
+  artifacts:
+    paths:
+     - build/
+
+deploy:
+  stage: deploy
+  image: gitlab/dind:latest
   only:
-    - master
+    - "master"
+  environment: production
+  services:
+    - docker:dind
+  before_script:
+    - mkdir -p ~/.ssh
+    - echo "$DEPLOY_SERVER_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - eval "$(ssh-agent -s)"
+    - ssh-add ~/.ssh/id_rsa
+    - ssh-keyscan -H $DEPLOYMENT_SERVER_IP >> ~/.ssh/known_hosts
+  script:
+    - scp -r ./build DEPLOYMENT_SERVER_USER@${DEPLOYMENT_SERVER_IP}:~/
