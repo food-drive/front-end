@@ -1,0 +1,15 @@
+image: node:8.9.1
+
+stages:
+  - build
+
+cache:
+  paths:
+  - node_modules/
+
+build:
+  script:
+    - npm install
+    - npm run build
+  only:
+    - master
