@@ -33,4 +33,4 @@ deploy:
     - ssh-add ~/.ssh/id_rsa
     - ssh-keyscan -H $DEPLOYMENT_SERVER_IP >> ~/.ssh/known_hosts
   script:
-    - scp -r ./build/. DEPLOYMENT_SERVER_USER@${DEPLOYMENT_SERVER_IP}:~/food-bank-management/
+    - scp -r ./build/. $DEPLOYMENT_SERVER_USER@$DEPLOYMENT_SERVER_IP:~/food-bank-management/
