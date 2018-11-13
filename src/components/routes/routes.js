@@ -4,10 +4,9 @@ import {Route, Redirect, withRouter} from 'react-router-dom'
 
 import routes, { routesIds } from './routes-list'
 
+import Wrapper from '../wrapper/Wrapper'
 import Layout from '../layout/LayoutContainer'
-
 import Page from '../../pages/page'
-
 import Home from '../../pages/home'
 import Login from '../../pages/login'
 import CollectionPointList from '../../pages/collection-point-list'
@@ -36,11 +35,13 @@ const LayoutRoutes = ({components}) => components.map(({Component, path}, i) =>
     exact
     path={path}
     render={() => (
-      <Layout>
-        <Page>
-          <Component/>
-        </Page>
-      </Layout>
+      <Wrapper>
+        <Layout>
+          <Page>
+            <Component/>
+          </Page>
+        </Layout>
+      </Wrapper>
     )}
   />
 )

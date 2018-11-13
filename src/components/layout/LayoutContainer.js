@@ -5,7 +5,7 @@ import { fetchUser } from '../login/loginActions'
 
 import Layout from './Layout'
 
-const mapStateToProps = ({user: {isLoggedIn}, routes, eventList}) => ({isLoggedIn, routes, eventList})
+const mapStateToProps = ({eventList}) => ({eventList})
 
 const mapDispatchToProps = () => ({
   fetchEventList: () => fetchEventList(),
