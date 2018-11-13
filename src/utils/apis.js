@@ -37,3 +37,9 @@ export const getChains = () =>
     .then(({data}) => {
       return data.catene
     })
+
+export const getTeamLeaders = () =>
+  axios.post(`${process.env.REACT_APP_API}/get/capi_equipe`, {})
+    .then(({data}) => {
+      return data.capi_equipe
+    })

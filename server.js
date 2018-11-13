@@ -27,6 +27,9 @@ app
   .post('/api/get/capi_equipe', (req, res) => {
     res.send(require(path.join(__dirname, 'api_mocks', 'capi_equipe.json')));
   })
+  .post('/api/get/capi_equipe_supermercati', (req, res) => {
+    res.send(require(path.join(__dirname, 'api_mocks', 'capi_equipe_supermercati.json')));
+  })
   .post('/api/get/catene', (req, res) => {
     res.send(require(path.join(__dirname, 'api_mocks', 'catene.json')));
   })

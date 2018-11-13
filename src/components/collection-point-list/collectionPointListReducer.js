@@ -2,6 +2,7 @@ import {
   FETCH_COLLECTION_POINT_LIST,
   FETCH_CHAINS,
   FETCH_CITIES,
+  // FETCH_TEAM_LEADERS
 } from './collectionPointListActions'
 
 const flatten = collection => collection.reduce((obj, {id, ...rest}) => {
@@ -10,7 +11,13 @@ const flatten = collection => collection.reduce((obj, {id, ...rest}) => {
 }, {})
 
 const reducer = (state = [], action) => {
-  const {type, collectionPointList, cities, chains} = action
+  const {
+    type,
+    collectionPointList,
+    cities,
+    chains,
+    // teamLeaders
+  } = action
   switch (type) {
     case FETCH_COLLECTION_POINT_LIST:
       return collectionPointList
@@ -29,6 +36,13 @@ const reducer = (state = [], action) => {
         catena: flattenChains[id_catena].nome
       }))
     }
+    // case FETCH_TEAM_LEADERS: {
+    //   const flattenTeamLeaders = flatten(teamLeaders)
+    //   return state.map(({id_catena, ...collectionPoint}) => ({
+    //     ...collectionPoint,
+    //     catena: flattenTeamLeaders[id_catena].nome
+    //   }))
+    // }
     default:
       return state
   }

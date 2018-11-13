@@ -32,11 +32,11 @@ class CollectionPointList extends React.Component {
           {
             collectionPointList
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map(({id, nome}) => {
+            .map(({id_supermercato, nome}) => {
             return (
-              <TableRow key={id}>
+              <TableRow key={id_supermercato}>
                 <TableCell component="th" scope="row">
-                  {id}
+                  {id_supermercato}
                 </TableCell>
                 <TableCell>{nome}</TableCell>
               </TableRow>
