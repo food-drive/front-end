@@ -1,12 +1,18 @@
 import store from '../../utils/store'
 
-import { getCollectionPoints, getChains, getCities, getTeamLeaders, getTeamLeadersSupermercati } from '../../utils/apis'
+import {
+  getCollectionPoints,
+  getChains,
+  getCities,
+  getTeamLeadersCollectionPointList,
+  getTeamLeaders
+} from '../../utils/apis'
 
 export const FETCH_COLLECTION_POINT_LIST = 'FETCH_COLLECTION_POINT_LIST'
 export const FETCH_CHAINS = 'FETCH_CHAINS'
 export const FETCH_CITIES = 'FETCH_CITIES'
 export const FETCH_TEAM_LEADERS = 'FETCH_TEAM_LEADERS'
-export const FETCH_TEAM_LEADERS_SUPERMERCATI = 'FETCH_TEAM_LEADERS_SUPERMERCATI'
+export const FETCH_TEAM_LEADERS_COLLECTION_POINT_LIST = 'FETCH_TEAM_LEADERS_COLLECTION_POINT_LIST'
 
 export const fetchCollectionPointList = () => {
   const { collectionPointList } = store.getState()
@@ -28,12 +34,12 @@ export const fetchCollectionPointList = () => {
         chains
       }))
 
-      getTeamLeadersSupermercati()
-      .then(teamLeadersSupermercati => store.dispatch({
-        type: FETCH_TEAM_LEADERS_SUPERMERCATI,
-        teamLeadersSupermercati
+      getTeamLeadersCollectionPointList()
+      .then(teamLeadersCollectionPointList => store.dispatch({
+        type: FETCH_TEAM_LEADERS_COLLECTION_POINT_LIST,
+        teamLeadersCollectionPointList
       }))
-      .then(getTeamLeaders())
+      .then(getTeamLeaders)
       .then(teamLeaders => store.dispatch({
         type: FETCH_TEAM_LEADERS,
         teamLeaders

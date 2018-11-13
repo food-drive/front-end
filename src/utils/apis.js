@@ -27,7 +27,11 @@ export const getEvents = () =>
 export const getCollectionPoints = () =>
   axios.post(`${process.env.REACT_APP_API}/get/supermercati`, {})
     .then(({data}) => {
-      return data.supermercati
+      return data.supermercati.map(({id, id_supermercato, ...rest}) => ({
+        id: parseInt(id),
+        id_supermercato: parseInt(id_supermercato),
+        ...rest
+      }))
     })
 
 export const getCities = () => Promise.resolve(cities.comuni)
@@ -38,8 +42,21 @@ export const getChains = () =>
       return data.catene
     })
 
+export const getTeamLeadersCollectionPointList = () =>
+  axios.post(`${process.env.REACT_APP_API}/get/capi_equipe_supermercati`, {})
+    .then(({data}) => {
+      return data.capi_equipe_supermercati
+        .map(({id_supermercato, id_capo_equipe}) => ({
+          id_supermercato: parseInt(id_supermercato),
+          id_capo_equipe: parseInt(id_capo_equipe)
+        }))
+    })
+
 export const getTeamLeaders = () =>
   axios.post(`${process.env.REACT_APP_API}/get/capi_equipe`, {})
     .then(({data}) => {
-      return data.capi_equipe
+      return data.capi_equipe.map(({id, ...rest}) => ({
+        id: parseInt(id),
+        ...rest
+      }))
     })
