@@ -1,4 +1,5 @@
 import axios from 'axios'
+import cities from '../resources/comuni.json'
 
 export const login = ({username, password}) =>
   axios.post(`${process.env.REACT_APP_API}/login`, {username, password})
@@ -27,4 +28,12 @@ export const getCollectionPoints = () =>
   axios.post(`${process.env.REACT_APP_API}/get/supermercati`, {})
     .then(({data}) => {
       return data.supermercati
+    })
+
+export const getCities = () => Promise.resolve(cities.comuni)
+
+export const getChains = () =>
+  axios.post(`${process.env.REACT_APP_API}/get/catene`, {})
+    .then(({data}) => {
+      return data.catene
     })

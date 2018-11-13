@@ -2,8 +2,12 @@ import { connect } from 'react-redux'
 
 import CollectionPointList from './CollectionPointList'
 
-const mapStateToProps = null
+import { fetchCollectionPointList } from './collectionPointListActions'
 
-const mapDispatchToProps = null
+const mapStateToProps = ({ collectionPointList }) => ({ collectionPointList })
+
+const mapDispatchToProps = () => ({
+  fetchCollectionPointList: () => fetchCollectionPointList()
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(CollectionPointList)
