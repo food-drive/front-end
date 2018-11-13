@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 
 const app = express()
 
@@ -10,6 +10,12 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+
+app
+  .use('/colletta-new', express.static(path.join(__dirname, 'build')))
+  .get('/colletta-new', (req, res) => {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'))
+  })
 
 app
   .post('/api/login', (req, res) => {
