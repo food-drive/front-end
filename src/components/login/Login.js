@@ -55,18 +55,12 @@ class Login extends React.Component {
     password: ''
   }
 
-  updateUsername (username) {
-    this.setState((state) => ({
-      username,
-      ...state
-    }))
+  updateUsername ({target: {value}}) {
+    this.setState({username: value})
   }
 
-  updatePassword (password) {
-    this.setState((state) => ({
-      password,
-      ...state
-    }))
+  updatePassword ({target: {value}}) {
+    this.setState({password: value})
   }
 
   submit (e) {
