@@ -46,9 +46,7 @@ const App = () => {
       <JssProvider generateClassName={generateClassName}>
         <MuiThemeProvider theme={createMuiTheme(theme)}>
           <CssBaseline />
-          <Router
-            basename={process.env.REACT_APP_BASE_PATH}
-          >
+          <Router>
             <Routes/>
           </Router>
         </MuiThemeProvider>

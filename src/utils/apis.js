@@ -18,7 +18,6 @@ export const logout = token =>
 export const getUser = () =>
   axios.get(`${process.env.REACT_APP_API}/userInfo`, headers())
     .then(({data}) => {
-      console.log(data)
       return data
     })
 
