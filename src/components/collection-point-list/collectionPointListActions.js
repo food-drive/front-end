@@ -2,10 +2,10 @@ import store from '../../utils/store'
 
 import {
   getCollectionPoints,
-  getChains,
+  // getChains,
   getCities,
-  getTeamLeadersCollectionPointList,
-  getTeamLeaders
+  // getTeamLeadersCollectionPointList,
+  // getTeamLeaders
 } from '../../utils/apis'
 
 export const FETCH_COLLECTION_POINT_LIST = 'FETCH_COLLECTION_POINT_LIST'
