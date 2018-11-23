@@ -18,31 +18,31 @@ app
   })
 
 app
-  .post('/api/login', (req, res) => {
+  .post('/api/:token/login', (req, res) => {
     res.send(require(path.join(__dirname, 'api_mocks', 'login.json')));
   })
-  .get('/api/logout', (req, res) => {
+  .get('/api/:token/logout', (req, res) => {
     res.sendStatus(200);
   })
-  .get('/api/get/user', (req, res) => {
+  .get('/api/:token/get/user', (req, res) => {
     res.send(require(path.join(__dirname, 'api_mocks', 'user.json')));
   })
-  .post('/api/get/aree', (req, res) => {
+  .post('/api/:token/get/aree', (req, res) => {
     res.send(require(path.join(__dirname, 'api_mocks', 'aree.json')));
   })
-  .post('/api/get/capi_equipe', (req, res) => {
+  .post('/api/:token/get/capi_equipe', (req, res) => {
     res.send(require(path.join(__dirname, 'api_mocks', 'capi_equipe.json')));
   })
-  .post('/api/get/capi_equipe_supermercati', (req, res) => {
+  .post('/api/:token/get/capi_equipe_supermercati', (req, res) => {
     res.send(require(path.join(__dirname, 'api_mocks', 'capi_equipe_supermercati.json')));
   })
-  .post('/api/get/catene', (req, res) => {
+  .post('/api/:token/get/catene', (req, res) => {
     res.send(require(path.join(__dirname, 'api_mocks', 'catene.json')));
   })
-  .post('/api/get/colletta', (req, res) => {
+  .post('/api/:token/get/colletta', (req, res) => {
     res.send(require(path.join(__dirname, 'api_mocks', 'colletta.json')));
   })
-  .post('/api/get/supermercati', (req, res) => {
+  .post('/api/:token/get/supermercati', (req, res) => {
     res.send(require(path.join(__dirname, 'api_mocks', 'supermercati.json')));
   })
   .listen(port, () => console.log(`listening on port ${port}`));

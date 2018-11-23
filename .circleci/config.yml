@@ -1,0 +1,111 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependencies-{{ checksum "package.json" }}
+      - run:
+          name: Install dependencies
+          command: yarn install
+      - save_cache:
+          key: dependencies-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: Check code formatting
+          command: yarn lint
+      - run:
+          name: Run tests and upload coverage reports to Codacy
+          command: yarn test:coverage
+  e2e:
+    docker:
+      - image: cypress/base:10
+        environment:
+          TERM: xterm
+    steps:
+      - checkout
+      - restore_cache:
+          key: e2e-cache-{{ checksum "package.json" }}
+      - run:
+          name: install ci dependencies
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          key: e2e-cache-{{ checksum "package.json" }}
+          paths:
+            - ~/.npm
+            - ~/.cache
+      - run:
+          name: Bundle the code
+          command: yarn build
+      - run:
+          name: Launch server
+          command: yarn start
+          background: true
+      - run:
+          name: Run E2E tests
+          command: yarn e2e
+      - store_test_results:
+          path: results
+      - store_artifacts:
+          path: cypress/videos
+      - store_artifacts:
+          path: cypress/screenshots
+
+  deploy-uat:
+    docker:
+      - image: sue445/heroku-cli
+        environment:
+          HEROKU_APP: pension-transfer-cwa-uat
+    steps:
+      - checkout
+      - run:
+          name: Deploy to staging
+          command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP.git master
+      - run:
+          name: Check Heroku process is healthy
+          command: heroku ps
+      - run:
+          name: Display release information
+          command: heroku releases:info
+
+  deploy-prod:
+    docker:
+      - image: sue445/heroku-cli
+        environment:
+          HEROKU_APP: pension-transfer-cwa
+    steps:
+      - checkout
+      - run:
+          name: Deploy to production
+          command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP.git master
+      - run:
+          name: Check Heroku process is healthy
+          command: heroku ps
+      - run:
+          name: Display release information
+          command: heroku releases:info
+
+workflows:
+  version: 2
+  ci:
+    jobs:
+      - build
+      - e2e
+      - deploy-uat:
+          requires:
+            - build
+            - e2e
+          filters:
+            branches:
+              only: master
+      - promote:
+          type: approval
+          requires:
+            - deploy-uat
+      - deploy-prod:
+          requires:
+            - promote
+

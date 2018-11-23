@@ -5,9 +5,7 @@ import CollectionPointList from '../components/collection-point-list/CollectionP
 
 const CollectionPointListPage = ({user: {colletta}}) => {
   return (
-    colletta ?
-      <CollectionPointList /> :
-      <div></div>
+    <CollectionPointList />
   )
 }
 

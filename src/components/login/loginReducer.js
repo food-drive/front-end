@@ -1,5 +1,6 @@
 import {
   LOGIN,
+  LOGIN_FAILED,
   FETCH_USER
 } from './loginActions'
 
@@ -15,7 +16,7 @@ const defaultState = {
 }
 
 export default (state = defaultState, action) => {
-  const {type, token, user} = action
+  const {type, token, user, error} = action
   switch (type) {
     case LOGIN: {
       localStorage.setItem(process.env.REACT_APP_TOKEN_KEY, token)
@@ -23,6 +24,13 @@ export default (state = defaultState, action) => {
         ...state,
         isLoggedIn: true,
         token
+      }
+    }
+    case LOGIN_FAILED: {
+      return {
+        ...state,
+        isLoggedIn: false,
+        error
       }
     }
     case LOGOUT: {

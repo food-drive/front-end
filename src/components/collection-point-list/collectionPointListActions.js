@@ -28,22 +28,22 @@ export const fetchCollectionPointList = () => {
         type: FETCH_CITIES,
         cities
       }))
-      getChains()
-      .then(chains => store.dispatch({
-        type: FETCH_CHAINS,
-        chains
-      }))
+      // getChains()
+      // .then(chains => store.dispatch({
+      //   type: FETCH_CHAINS,
+      //   chains
+      // }))
 
-      getTeamLeadersCollectionPointList()
-      .then(teamLeadersCollectionPointList => store.dispatch({
-        type: FETCH_TEAM_LEADERS_COLLECTION_POINT_LIST,
-        teamLeadersCollectionPointList
-      }))
-      .then(getTeamLeaders)
-      .then(teamLeaders => store.dispatch({
-        type: FETCH_TEAM_LEADERS,
-        teamLeaders
-      }))
+      // getTeamLeadersCollectionPointList()
+      // .then(teamLeadersCollectionPointList => store.dispatch({
+      //   type: FETCH_TEAM_LEADERS_COLLECTION_POINT_LIST,
+      //   teamLeadersCollectionPointList
+      // }))
+      // .then(getTeamLeaders)
+      // .then(teamLeaders => store.dispatch({
+      //   type: FETCH_TEAM_LEADERS,
+      //   teamLeaders
+      // }))
     })
   }
 }
