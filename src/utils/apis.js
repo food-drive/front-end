@@ -9,20 +9,20 @@ const headers = () => {
 }
 
 export const login = ({username, password}) =>
-  axios.post(`${process.env.REACT_APP_API}/login`, {username, password})
+  axios.post('/api/login', {username, password})
   .then(({data: {token}}) => token)
 
 export const logout = token =>
-  axios.get(`${process.env.REACT_APP_API}/logout`, {token})
+  axios.get('/api/logout', {token})
 
 export const getUser = () =>
-  axios.get(`${process.env.REACT_APP_API}/userInfo`, headers())
+  axios.get('/api/userInfo', headers())
     .then(({data}) => {
       return data
     })
 
 export const getEvents = () =>
-  axios.get(`${process.env.REACT_APP_API}/foodDrives`, headers())
+  axios.get('/api/foodDrives', headers())
     .then(({data}) => {
       return data.map(({attiva, ...colletta}) => ({
         attiva: parseInt(attiva),
@@ -31,7 +31,7 @@ export const getEvents = () =>
     })
 
 export const getCollectionPoints = () =>
-  axios.get(`${process.env.REACT_APP_API}/collectionPoints`, {
+  axios.get('/api/collectionPoints', {
     params: {
       idColletta: 7,
       idArea: [1,2],
