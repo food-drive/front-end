@@ -12,7 +12,7 @@ build:
   stage: build
   script:
     - npm install
-    - npm run builds
+    - npm run build
 
 production:
   type: deploy
