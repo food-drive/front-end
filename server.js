@@ -1,48 +1,16 @@
-const express = require('express');
-const path = require('path');
+const express = require('express')
+const proxy = require('express-http-proxy')
+const path = require('path')
+require('dotenv').config()
 
 const port = process.env.PORT || 3000;
 
 const app = express()
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
-
 app
-  .use('/colletta-new', express.static(path.join(__dirname, 'build')))
-  .get('/colletta-new', (req, res) => {
+  .use(express.static(path.join(__dirname, 'build')))
+  .use('/api', proxy(process.env.REACT_APP_API_URL))
+  .get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'index.html'))
-  })
-
-app
-  .post('/api/:token/login', (req, res) => {
-    res.send(require(path.join(__dirname, 'api_mocks', 'login.json')));
-  })
-  .get('/api/:token/logout', (req, res) => {
-    res.sendStatus(200);
-  })
-  .get('/api/:token/get/user', (req, res) => {
-    res.send(require(path.join(__dirname, 'api_mocks', 'user.json')));
-  })
-  .post('/api/:token/get/aree', (req, res) => {
-    res.send(require(path.join(__dirname, 'api_mocks', 'aree.json')));
-  })
-  .post('/api/:token/get/capi_equipe', (req, res) => {
-    res.send(require(path.join(__dirname, 'api_mocks', 'capi_equipe.json')));
-  })
-  .post('/api/:token/get/capi_equipe_supermercati', (req, res) => {
-    res.send(require(path.join(__dirname, 'api_mocks', 'capi_equipe_supermercati.json')));
-  })
-  .post('/api/:token/get/catene', (req, res) => {
-    res.send(require(path.join(__dirname, 'api_mocks', 'catene.json')));
-  })
-  .post('/api/:token/get/colletta', (req, res) => {
-    res.send(require(path.join(__dirname, 'api_mocks', 'colletta.json')));
-  })
-  .post('/api/:token/get/supermercati', (req, res) => {
-    res.send(require(path.join(__dirname, 'api_mocks', 'supermercati.json')));
   })
   .listen(port, () => console.log(`listening on port ${port}`));
