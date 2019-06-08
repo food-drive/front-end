@@ -37,8 +37,8 @@ class CollectionPointList extends React.Component {
     rowsPerPage: 50
   }
   componentDidMount () {
-    const { fetchCollectionPointList } = this.props
-    fetchCollectionPointList()
+    const { fetchCollectionPointList, colletta, user } = this.props
+    fetchCollectionPointList({idColletta: colletta.id, idArea: [user.id_area]})
   }
   render () {
     const { page, rowsPerPage } = this.state

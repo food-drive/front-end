@@ -3,11 +3,11 @@ import { connect } from 'react-redux'
 
 import CollectionPointList from '../components/collection-point-list/CollectionPointsListContainer'
 
-const CollectionPointListPage = ({user: {colletta}}) => {
-  return (
-    <CollectionPointList />
-  )
-}
+const CollectionPointListPage = ({user: {colletta}}) => (
+  colletta
+    ? <CollectionPointList colletta={colletta}/>
+    : <div />
+)
 
 const mapStateToProps = ({user}) => ({user})
 

@@ -30,12 +30,9 @@ export const getEvents = () =>
       }))
     })
 
-export const getCollectionPoints = () =>
+export const getCollectionPoints = params =>
   axios.get('/api/collectionPoints', {
-    params: {
-      idColletta: 7,
-      idArea: [1,2],
-    },
+    params,
     ...headers()
   })
     .then(({data}) => {

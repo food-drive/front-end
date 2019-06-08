@@ -1,7 +1,14 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
-const CollectionPoint = () => (
-  <div>CollectionPoint</div>
+const CollectionPoint = ({user}) => (
+  user
+    ? <div>CollectionPoint</div>
+    : <div/>
 )
 
-export default CollectionPoint
+const mapStateToProps = ({user}) => ({user})
+
+const mapDispatchToProps = null
+
+export default connect(mapStateToProps, mapDispatchToProps)(CollectionPoint)

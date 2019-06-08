@@ -8,14 +8,7 @@ import {
   LOGOUT
 } from '../logout-button/logoutActions'
 
-const token = localStorage.getItem(process.env.REACT_APP_TOKEN_KEY)
-
-const defaultState = {
-  isLoggedIn: token && true,
-  token
-}
-
-export default (state = defaultState, action) => {
+export default (state, action) => {
   const {type, token, user, error} = action
   switch (type) {
     case LOGIN: {

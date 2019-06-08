@@ -1,57 +1,41 @@
-import React from 'react';
-import { Provider } from 'react-redux'
-import { BrowserRouter as Router } from 'react-router-dom'
-
-import { JssProvider } from 'react-jss';
-
-import CssBaseline from '@material-ui/core/CssBaseline';
+import React, { createContext } from 'react';
 import {
   createMuiTheme,
-  createGenerateClassName,
-  MuiThemeProvider,
-} from '@material-ui/core/styles';
+} from '@material-ui/core/styles'
 
-import Routes from './components/routes/routes'
+import {
+  ThemeProvider,
+} from '@material-ui/styles';
 
-import store from './utils/store'
+// import Routes from './components/routes/routes'
 
-const options = {
-  theme: {
-    typography: {
-      useNextVariants: true,
-      suppressDeprecationWarnings: true
+import useDefaultContext from './utils/mainContext';
+
+const Context = createContext()
+
+const { Provider } = Context;
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#f08a00'
     },
-    palette: {
-      primary: {
-        main: '#f08a00'
-      },
-      secondary: {
-        main: '#465f0f',
-      },
-    }
-  },
-  dangerouslyUseGlobalCSS: false,
-  productionPrefix: 'jss',
-};
+    secondary: {
+      main: '#465f0f',
+    },
+  }
+});
 
 const App = () => {
-  const { dangerouslyUseGlobalCSS, productionPrefix, theme } = options;
-
-  const generateClassName = createGenerateClassName({
-    dangerouslyUseGlobalCSS,
-    productionPrefix,
-  });
   return (
-    <Provider store={store}>
-      <JssProvider generateClassName={generateClassName}>
-        <MuiThemeProvider theme={createMuiTheme(theme)}>
-          <CssBaseline />
-          <Router>
-            <Routes/>
-          </Router>
-        </MuiThemeProvider>
-      </JssProvider>
+    <Provider value={useDefaultContext()}>
+      <ThemeProvider theme={theme}>
+        <div>ciao</div>
+      </ThemeProvider>
     </Provider>
+          // <Router>
+          //   <Routes/>
+          // </Router>
   )
 }
 

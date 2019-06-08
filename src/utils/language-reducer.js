@@ -1,6 +1,4 @@
-import it from '../i18n/it'
-
-const reducer = (state = it, action) => {
+const reducer = (state, action) => {
   return state
 }
 
