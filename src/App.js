@@ -1,42 +1,36 @@
-import React, { createContext } from 'react';
+import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+
 import {
   createMuiTheme,
-} from '@material-ui/core/styles'
+} from '@material-ui/core/styles';
 
 import {
   ThemeProvider,
 } from '@material-ui/styles';
 
-// import Routes from './components/routes/routes'
-
-import useDefaultContext from './utils/mainContext';
-
-const Context = createContext()
-
-const { Provider } = Context;
+import Routing from './components/Routing';
+import Wrapper from './components/Wrapper';
 
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#f08a00'
+      main: '#f08a00',
     },
     secondary: {
       main: '#465f0f',
     },
-  }
+  },
 });
 
-const App = () => {
-  return (
-    <Provider value={useDefaultContext()}>
-      <ThemeProvider theme={theme}>
-        <div>ciao</div>
-      </ThemeProvider>
-    </Provider>
-          // <Router>
-          //   <Routes/>
-          // </Router>
-  )
-}
+const App = () => (
+  <ThemeProvider theme={theme}>
+    <Router>
+      <Wrapper>
+        <Routing />
+      </Wrapper>
+    </Router>
+  </ThemeProvider>
+);
 
 export default App;

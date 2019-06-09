@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
@@ -12,8 +12,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-
-import { MainContext } from '../Wrapper';
 
 const styles = theme => ({
   drawer: {
@@ -38,17 +36,16 @@ const styles = theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    width: theme.spacing(7),
+    width: theme.spacing.unit * 7,
     [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(9),
+      width: theme.spacing.unit * 9,
     },
   },
 });
 
 const Navigation = ({ 
- classes, open, toggleDrawer,
+location: { pathName }, classes, routes, language, open, toggleDrawer 
 }) => {
-  const { location: { pathname }, language, routes } = useContext(MainContext);
   console.log(pathname)
   return (
     <Drawer

@@ -6,7 +6,7 @@ import Header from './Header'
 import Navigation from '../navigation/NavigationContainer'
 import Content from './Content'
 
-import 'typeface-roboto'
+// import 'typeface-roboto'
 
 const styles = () => ({
   root: {
@@ -20,21 +20,24 @@ const styles = () => ({
 })
 
 class Layout extends React.Component {
-  state= {
-    open: false
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false,
+    }
   }
 
-  toggleDrawer () {
+  toggleDrawer() {
     this.setState({open: !this.state.open})
   }
 
-  componentDidMount () {
-    const { fetchEventList, fetchUser } = this.props
-    fetchEventList()
-    fetchUser()
-  }
+  // componentDidMount () {
+  //   const { fetchEventList, fetchUser } = this.props
+  //   fetchEventList()
+  //   fetchUser()
+  // }
 
-  render () {
+  render() {
     const {
       classes,
       children,
