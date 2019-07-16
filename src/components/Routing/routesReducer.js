@@ -1,6 +1,6 @@
-import {
-  SET_SELECTED_ROUTE,
-} from './NavigationActions';
+import { NavigationActions } from '../Navigation';
+
+const { SET_SELECTED_ROUTE } = NavigationActions;
 
 const reducer = (state, action) => {
   const { type, pathname } = action;

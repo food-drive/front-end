@@ -1,12 +1,16 @@
 import {
-  LOGIN,
-  LOGIN_FAILED,
-  FETCH_USER,
-} from './loginActions';
+  loginActions,
+} from '../Login';
 
 import {
   LOGOUT,
-} from './logoutActions';
+  FETCH_USER,
+} from './userActions';
+
+const {
+  LOGIN,
+  LOGIN_FAILED,
+} = loginActions;
 
 export default (state, action) => {
   const {

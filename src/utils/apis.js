@@ -1,55 +1,54 @@
-import axios from 'axios'
-import cities from '../resources/comuni.json'
+import axios from 'axios';
+import cities from '../resources/comuni.json';
 
 const headers = () => {
-  const token = localStorage.getItem(process.env.REACT_APP_TOKEN_KEY)
+  const token = localStorage.getItem(process.env.REACT_APP_TOKEN_KEY);
   return {
-    headers: {'Authorization': "Bearer " + token}
-  }
-}
+    headers: { Authorization: `Bearer ${token}` },
+  };
+};
 
-export const login = ({username, password}) =>
-  axios.post('/api/login', {username, password})
-  .then(({data: {token}}) => token)
+export const login = ({ username = '', password = '' }) => axios.post('/api/login', { username, password })
+  .then(({ data: { token } }) => token);
 
-export const logout = token =>
-  axios.get('/api/logout', {token})
+export const logout = token => axios.get('/api/logout', { token });
 
-export const getUser = () =>
-  axios.get('/api/userInfo', headers())
-    .then(({data}) => {
-      return data
-    })
+export const getUser = () => axios.get('/api/userInfo', headers())
+  .then(({ data }) => data);
 
-export const getEvents = () =>
-  axios.get('/api/foodDrives', headers())
-    .then(({data}) => {
-      return data.map(({attiva, ...colletta}) => ({
-        attiva: parseInt(attiva),
-        ...colletta
-      }))
-    })
+export const getEvents = () => axios.get('/api/foodDrives', headers())
+  .then(({ data }) => data);
 
-export const getCollectionPoints = params =>
-  axios.get('/api/collectionPoints', {
-    params,
-    ...headers()
-  })
-    .then(({data}) => {
-      return data.map(({id, id_supermercato, ...rest}) => ({
-        id: parseInt(id),
-        id_supermercato: parseInt(id_supermercato),
-        ...rest
-      }))
-    })
+export const getCollectionPoints = ({ idEvent, idArea }) => axios.get('/api/collectionPoints', {
+  params: {
+    idEvent,
+    idArea,
+  },
+  ...headers(),
+})
+  .then(({ data }) => data);
 
-export const getCities = () => Promise.resolve(cities.comuni)
+export const getReport = ({ idEvent, idArea }) => axios.get('/api/report', {
+  params: {
+    idEvent,
+    idArea,
+  },
+  ...headers(),
+})
+  .then(({ data }) => data);
 
-// export const getChains = () =>
-//   axios.post(getApiUrl('/get/catene'), {})
-//     .then(({data}) => {
-//       return data.catene
-//     })
+export const getProductTypes = ({ idEvent }) => axios.get('/api/productTypes', {
+  params: {
+    idEvent,
+  },
+  ...headers(),
+})
+  .then(({ data }) => data);
+
+export const getCities = () => Promise.resolve(cities.comuni);
+
+export const getChains = () => axios.post('api/catene', headers())
+  .then(({ data }) => data.catene);
 
 // export const getTeamLeadersCollectionPointList = () =>
 //   axios.post(getApiUrl('/get/capi_equipe_supermercati'), {})

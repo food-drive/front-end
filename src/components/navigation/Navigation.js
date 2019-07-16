@@ -1,88 +1,176 @@
-import React, { useContext } from 'react';
+import React, {
+  useContext, useMemo, useEffect, useReducer,
+} from 'react';
+import { number } from 'prop-types';
+import clsx from 'clsx';
 
-import { Link } from 'react-router-dom';
+import { Link as RouteLink } from 'react-router-dom';
+import {
+  Link,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Divider,
+  Drawer,
+  makeStyles,
+  useMediaQuery,
+  Box,
+} from '@material-ui/core';
 
-import { withStyles } from '@material-ui/core/styles';
-import classNames from 'classnames';
-import Drawer from '@material-ui/core/Drawer';
-import MenuList from '@material-ui/core/MenuList';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import IconButton from '@material-ui/core/IconButton';
+import { useTheme } from '@material-ui/core/styles';
+import MainContext from '../../Contexts/MainContext';
+import MenuContext from '../../Contexts/MenuContext';
+import RoutingContext from '../../Contexts/RoutingContext';
 
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import defaultRoutes from '../../utils/routes-list';
+import { routesReducer } from '../Routing';
 
-import { MainContext } from '../Wrapper';
+import { SET_SELECTED_ROUTE } from './NavigationActions';
+
+import {
+  userActions,
+} from '../Users';
+
+const { LOGOUT } = userActions;
+
+const menuWidth = '250px';
 
 const styles = theme => ({
-  drawer: {
-    position: 'relative',
+  menu: {
+    width: menuWidth,
+    flexShrink: 0,
     whiteSpace: 'nowrap',
-    width: 300,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
   },
-  toolbarIcon: {
+  bar: {
+    zIndex: theme.zIndex.drawer + 1,
+    marginLeft: menuWidth,
+    width: `calc(100% - ${menuWidth})`,
+  },
+  root: {
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
-    ...theme.mixins.toolbar,
   },
-  drawerClose: {
-    overflowX: 'hidden',
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    width: theme.spacing(7),
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(9),
-    },
+  drawer: {
+    width: menuWidth,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: menuWidth,
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
   },
 });
 
-const Navigation = ({ 
- classes, open, toggleDrawer,
-}) => {
-  const { location: { pathname }, language, routes } = useContext(MainContext);
-  console.log(pathname)
+const useStyles = makeStyles(styles);
+
+const Navigation = () => {
+  const classes = useStyles();
+  const theme = useTheme();
+
+  const isNotMobile = useMediaQuery(theme.breakpoints.up('sm'));
+  const { isMenuOpen, toggleMenu } = useContext(MenuContext);
+  const { location } = useContext(RoutingContext);
+  const [routes, updateRoutes] = useReducer(routesReducer, defaultRoutes);
+
+  const {
+    language,
+    user,
+  } = useContext(MainContext);
+
+  const { state: { isLoggedIn } } = user;
+
+  const loginRoute = useMemo(
+    () => routes.find(({ id }) => id === 'login'),
+    [routes],
+  );
+
+  const logout = () => user.dispatch({ type: LOGOUT });
+
+  useEffect(() => {
+    const { pathname } = location;
+    updateRoutes({
+      type: SET_SELECTED_ROUTE,
+      pathname,
+    });
+  }, [location, updateRoutes]);
+
+  const drawerProps = {};
+  if (!isNotMobile) {
+    drawerProps.anchor = theme.direction === 'rtl' ? 'right' : 'left';
+    drawerProps.open = isMenuOpen;
+    drawerProps.onClose = toggleMenu;
+    drawerProps.ModalProps = {
+      keepMounted: true, // Better open performance on mobile.
+    };
+  } else {
+    drawerProps.open = true;
+  }
+
   return (
-    <Drawer
-      variant="permanent"
-      anchor="left"
-      open={open}
-      classes={{
-        paper: classNames(classes.drawer, !open && classes.drawerClose),
-      }}
-    >
-      <div className={classes.toolbarIcon}>
-        <IconButton onClick={toggleDrawer}>
-          <ChevronLeftIcon />
-        </IconButton>
-      </div>
-      <MenuList>
-        {
-        routes.filter(({ showInNavigation }) => showInNavigation)
-          .map(({ 
-            id, path, Icon, selected,
-          }) => (
-            <Link to={path} key={id}>
-              <MenuItem selected={selected}>
-                <ListItemIcon >
-                  <Icon />
-                </ListItemIcon>
-                <ListItemText inset primary={language.pages[id].title} />
-              </MenuItem>
-            </Link>
-          ))
-        }
-      </MenuList>
-    </Drawer>
+    <Box component="nav" className={clsx(isNotMobile && classes.drawer)} aria-label="Mailbox folders">
+      <Drawer
+        variant={clsx(!isNotMobile && 'temporary', isNotMobile && 'permanent')}
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+        {...drawerProps}
+      >
+        <div>
+          <div className={classes.toolbar} />
+          <Divider />
+          <List>
+            {
+              routes.filter(({ showInNavigation }) => showInNavigation)
+                .map(({
+                  id, path, Icon, selected,
+                }) => (
+                  <Link to={path} key={id} component={RouteLink}>
+                    <ListItem
+                      button
+                      key={id}
+                      selected={selected}
+                    >
+                      <ListItemIcon><Icon /></ListItemIcon>
+                      <ListItemText>
+                        {language.state.pages[id].title}
+                      </ListItemText>
+                    </ListItem>
+                  </Link>
+                ))
+            }
+          </List>
+          <Divider />
+          <List>
+            {
+              (!isLoggedIn && (
+                <Link component={RouteLink} to={loginRoute.path}>
+                  <ListItem
+                    button
+                  >
+                    Log In
+                  </ListItem>
+                </Link>
+              ))
+              || (
+                <ListItem
+                  button
+                  onClick={logout}
+                >
+                  Log Out
+                </ListItem>
+              )
+            }
+          </List>
+        </div>
+      </Drawer>
+    </Box>
   );
 };
 
-export default withStyles(styles)(Navigation);
+Navigation.propTypes = {
+  menuWidth: number.isRequired,
+};
+
+export default Navigation;

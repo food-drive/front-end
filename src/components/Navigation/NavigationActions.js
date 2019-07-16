@@ -1,8 +1,6 @@
-// import store from '../../utils/store'
+// eslint-disable-next-line
+export const SET_SELECTED_ROUTE = 'SET_SELECTED_ROUTE';
 
-export const SET_SELECTED_ROUTE = 'SET_SELECTED_ROUTE'
-
-// export const setSelectedRoute = pathname => store.dispatch({
-//   type: SET_SELECTED_ROUTE,
-//   pathname
-// })
+export default {
+  SET_SELECTED_ROUTE,
+};

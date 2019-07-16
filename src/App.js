@@ -2,8 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import {
-  createMuiTheme,
-} from '@material-ui/core/styles';
+  CssBaseline,
+} from '@material-ui/core';
 
 import {
   ThemeProvider,
@@ -11,23 +11,18 @@ import {
 
 import Routing from './components/Routing';
 import Wrapper from './components/Wrapper';
+import Page from './components/Page';
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#f08a00',
-    },
-    secondary: {
-      main: '#465f0f',
-    },
-  },
-});
+import theme from './theme';
 
 const App = () => (
   <ThemeProvider theme={theme}>
+    <CssBaseline />
     <Router>
       <Wrapper>
-        <Routing />
+        <Page>
+          <Routing />
+        </Page>
       </Wrapper>
     </Router>
   </ThemeProvider>

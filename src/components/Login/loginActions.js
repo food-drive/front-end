@@ -4,7 +4,6 @@
 
 export const LOGIN = 'LOGIN';
 export const LOGIN_FAILED = 'LOGIN_FAILED';
-export const FETCH_USER = 'FETCH_USER';
 
 // export const loginAction = ({username, password}) => {
 //   login({username, password})
@@ -30,3 +29,7 @@ export const FETCH_USER = 'FETCH_USER';
 //     })
 //   )
 // }
+
+export default {
+  LOGIN, LOGIN_FAILED,
+};

@@ -1,32 +1,35 @@
-import React, { createContext } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import { object, node } from 'prop-types';
 
-import useDefaultContext from '../../utils/mainContext';
-import Navigation from '../Navigation';
+import useMainContext from '../../utils/mainContext';
+import MainContext from '../../Contexts/MainContext';
+import RoutingContext from '../../Contexts/RoutingContext';
+import MenuContext from '../../Contexts/MenuContext';
 
-export const MainContext = createContext();
+const menuWidth = 250;
 
-const Wrapper = ({ 
-  location, history, match, children }) => {
-  const state = {
-    ...useDefaultContext(),
-    location,
-    history,
-    match,
+const Wrapper = ({
+  location, history, match, children,
+}) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  function toggleMenu() {
+    setIsMenuOpen(!isMenuOpen);
+  }
+
+  const mainState = useMainContext();
+  const routingState = {
+    location, history, match,
   };
-
   return (
-    <MainContext.Provider value={state}>
-      <>
-        <Link to="/">Home</Link>
-        <Link to="/users">Users</Link>
-        <Navigation />
-        {
-          children
-        }
-      </>
-    </MainContext.Provider>
+    <RoutingContext.Provider value={routingState}>
+      <MainContext.Provider value={mainState}>
+        <MenuContext.Provider value={{ isMenuOpen, toggleMenu, menuWidth }}>
+          {children}
+        </MenuContext.Provider>
+      </MainContext.Provider>
+    </RoutingContext.Provider>
   );
 };
 

@@ -1,9 +1,6 @@
-import React, { useContext } from 'react';
-import { MainContext } from '../Wrapper';
+import React from 'react';
 
 const Users = () => {
-  const mainContext = useContext(MainContext);
-  console.log(mainContext.location)
   return (
     <div>Hello Users</div>
   );

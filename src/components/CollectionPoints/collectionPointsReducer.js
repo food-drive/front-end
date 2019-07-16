@@ -1,10 +1,10 @@
-// import {
-//   FETCH_COLLECTION_POINT_LIST,
-//   FETCH_CHAINS,
-//   FETCH_CITIES,
-//   FETCH_TEAM_LEADERS_COLLECTION_POINT_LIST,
-//   FETCH_TEAM_LEADERS,
-// } from './collectionPointListActions';
+import {
+  FETCH_COLLECTION_POINTS,
+  // FETCH_CHAINS,
+  // FETCH_CITIES,
+  // FETCH_TEAM_LEADERS_COLLECTION_POINT_LIST,
+  // FETCH_TEAM_LEADERS,
+} from './collectionPointsActions';
 
 // const flatten = collection => collection.reduce((obj, { id, ...rest }) => {
 //   obj[id] = rest;
@@ -19,15 +19,15 @@
 const reducer = (state = [], action) => {
   const {
     type,
-    // collectionPointList,
+    collectionPoints,
     // cities,
     // chains,
     // teamLeadersCollectionPointList,
     // teamLeaders,
   } = action;
   switch (type) {
-    // case FETCH_COLLECTION_POINT_LIST:
-    //   return collectionPointList;
+    case FETCH_COLLECTION_POINTS:
+      return collectionPoints;
     // case FETCH_CITIES: {
     //   const flattenCities = flatten(cities);
     //   return state.map(({ id_comune, ...collectionPoint }) => ({
