@@ -21,6 +21,25 @@ const toolbarOptions = [
   },
 ];
 
+const defaultColumns = [{
+  headerName: 'Provincia',
+  field: 'city.province.name',
+  filter: true,
+  order: 'desc',
+  align: 'left',
+  comparator: (a, b) => (
+    (b.city.province.name < a.city.province.name && 1)
+    || (b.city.province.name > a.city.province.name && -1)
+    || 0
+  ),
+}, {
+  headerName: 'Nome', field: 'name',
+}, {
+  headerName: 'Indirizzo', field: 'address',
+}, {
+  headerName: 'Citta`', field: 'city.name',
+}];
+
 const Reports = () => {
   const [report, dispatch] = useReducer(reducer, []);
   const [columns, setColumns] = useState();
@@ -36,10 +55,13 @@ const Reports = () => {
         idArea,
       });
       dispatch({ type: FETCH_REPORTS, report: reportData });
-      setColumns(header);
+      setColumns([
+        ...defaultColumns,
+        ...header,
+      ]);
     }
     fetchReport();
-  }, [user, eventList]);
+  }, [user, eventList, activeEvent.id]);
 
   return (columns && (
     <Table
@@ -47,6 +69,7 @@ const Reports = () => {
       rowData={report}
       size="small"
       toolbarOptions={toolbarOptions}
+      rowsPerPage={50}
     />
   )) || '';
 };

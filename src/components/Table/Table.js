@@ -16,7 +16,13 @@ import {
   TablePagination,
   Toolbar,
   makeStyles,
+  Typography,
+  Box,
+  IconButton,
 } from '@material-ui/core';
+
+import { FilterList } from '@material-ui/icons';
+
 import {
   arrayOf, object, number, string, oneOf, shape,
 } from 'prop-types';
@@ -52,7 +58,11 @@ const extractDataColumns = (columnDefs) => {
 const getColumnRows = (cols) => {
   const haveChildren = (cols.find(({ children }) => children) && true) || false;
   const resCols = [
-    cols.map(({ headerName, field, colSpan }) => ({ headerName, field, colSpan })),
+    cols.map(({
+      headerName, field, colSpan, filter, align,
+    }) => ({
+      headerName, field, colSpan, filter, align,
+    })),
   ];
   if (haveChildren) {
     resCols.push([]);
@@ -77,26 +87,20 @@ const Table = ({
 }) => {
   const [headerColumnRows] = useState(getColumnRows(columnDefs));
   const [dataColumns] = useState(extractDataColumns(columnDefs));
+  const [defaultSortingCol] = useState(columnDefs.find(({ order }) => order));
   const [currentPage, setCurrentPage] = useState(page);
   const classes = useStyles();
   const handleChangePage = useCallback((event, newPage) => {
     setCurrentPage(newPage);
-  });
+  }, []);
 
-  const buildCsv = useCallback(() => {
-    return [
-      ...headerColumnRows.map(columnRow => columnRow.map(({ headerName }) => headerName)),
-      ...rowData.map(data => dataColumns.map(({ field }) => {
-        const ret = `"${field.split('.').reduce((val, key) => val[key], data)}"`;
-        // console.log(ret.toString().replace(/,/g, '\\,'))
-        // return ret.toString().replace(/,/g, '\,');
-        return ret;
-      })),
-    ];
-  });
+  const buildCsv = useMemo(() => [
+    ...headerColumnRows.map(columnRow => columnRow.map(({ headerName }) => headerName)),
+    ...rowData.map(data => dataColumns.map(({ field }) => `"${field.split('.').reduce((val, key) => val[key], data)}"`)),
+  ], [headerColumnRows, rowData, dataColumns]);
 
   const downloadButtonRenderer = ({ title }) => (
-    <Button onClick={() => downloadCsv({ data: buildCsv(), name: title })}>Download csv</Button>
+    <Button variant="contained" onClick={() => downloadCsv({ data: buildCsv(), name: title })}>Download csv</Button>
   );
 
   const toolbarRenderer = useCallback(({ type, options }) => {
@@ -107,7 +111,7 @@ const Table = ({
         return '';
     }
   }, [
-    toolbarOptionsTypes,
+    toolbarOptionsTypes.download,
     downloadButtonRenderer,
   ]);
 
@@ -128,14 +132,25 @@ const Table = ({
             headerColumnRows.map((columnRow, i) => (
               <TableRow key={i}>
                 {
-                  columnRow.map(({ headerName, colSpan = 1, align = 'center' }, j) => (
+                  columnRow.map(({
+                    headerName, filter, colSpan = 1, align = 'center',
+                  }, j) => (
                     <TableCell
                       variant="head"
                       key={j}
                       colSpan={colSpan}
                       align={align}
                     >
-                      {headerName}
+                      <Box display="flex">
+                        <Typography variant="body1">
+                          <Box fontWeight="bold" component="span">
+                            {headerName}
+                          </Box>
+                        </Typography>
+                        {
+                          (filter && <IconButton><FilterList fontSize="small" /></IconButton>)
+                        }
+                      </Box>
                     </TableCell>
                   ))
                 }
@@ -147,6 +162,7 @@ const Table = ({
           {
             rowData
               .slice(currentPage * rowsPerPage, currentPage * rowsPerPage + rowsPerPage)
+              .sort(defaultSortingCol.comparator)
               .map(data => (
                 <TableRow key={data.id}>
                   {
@@ -156,7 +172,9 @@ const Table = ({
                         key={field}
                         align="center"
                       >
-                        {field.split('.').reduce((val, key) => val[key], data)}
+                        <Typography variant="body1">
+                          {field.split('.').reduce((val, key) => val[key], data)}
+                        </Typography>
                       </TableCell>
                     ))
                   }
