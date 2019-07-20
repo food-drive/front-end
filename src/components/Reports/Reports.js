@@ -23,13 +23,15 @@ const toolbarOptions = [
 
 const defaultColumns = [{
   headerName: 'Provincia',
-  field: 'city.province.name',
-  filter: true,
+  field: 'province',
+  filter: {
+    type: 'set',
+  },
   order: 'desc',
   align: 'left',
   comparator: (a, b) => (
-    (b.city.province.name < a.city.province.name && 1)
-    || (b.city.province.name > a.city.province.name && -1)
+    (b.province < a.province && 1)
+    || (b.province > a.province && -1)
     || 0
   ),
 }, {
@@ -37,7 +39,7 @@ const defaultColumns = [{
 }, {
   headerName: 'Indirizzo', field: 'address',
 }, {
-  headerName: 'Citta`', field: 'city.name',
+  headerName: 'Citta`', field: 'city',
 }];
 
 const Reports = () => {
